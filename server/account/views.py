@@ -23,9 +23,10 @@ USER = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     queryset = USER.objects.all()
+    lookup_field = "id"
 
     def get_queryset(self):
         queryset = USER.objects.all()
@@ -60,6 +61,9 @@ class UserViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_instance()
