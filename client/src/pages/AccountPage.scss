@@ -1,0 +1,20 @@
+@use '../scss/style.scss' as *;
+.AccountPage {
+  .nav {
+    margin: 0 auto;
+    a {
+      padding: rem(8) rem(10);
+      border-radius: rem(22);
+
+      svg {
+        display: block;
+        width: rem(18);
+        height: rem(18);
+      }
+      &.active {
+        background-color: $ColorMain;
+        color: $ColorPrimary;
+      }
+    }
+  }
+}

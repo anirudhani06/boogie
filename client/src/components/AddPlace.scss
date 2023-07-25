@@ -1,0 +1,154 @@
+@use '../scss/style.scss' as *;
+.accomodation_form {
+  width: rem(650);
+  margin: 0 auto;
+
+  .form-control {
+    position: relative;
+    margin-bottom: rem(16);
+
+    label {
+      display: block;
+      font-size: $f-lr;
+      margin-bottom: rem(6);
+    }
+    p {
+      margin: 0;
+    }
+    input {
+      width: 100%;
+      padding: rem(12) rem(12);
+      outline: transparent;
+      border-radius: rem(4);
+      border: 1px solid $ColorGray;
+      display: block;
+    }
+    .date-picker {
+      position: absolute;
+      top: rem(-340);
+      left: 0;
+      border-radius: rem(4);
+      box-shadow: 0 4px 12px rgba(12, 12, 12, 0.232);
+    }
+    .date {
+      border: 1px solid $ColorGray;
+      display: block;
+      padding: rem(12);
+      width: 100%;
+      border-radius: rem(4);
+      cursor: pointer;
+    }
+    textarea {
+      width: 100%;
+      padding: rem(12) rem(12);
+      outline: transparent;
+      border-radius: rem(4);
+      border: 1px solid $ColorGray;
+    }
+    .import-img {
+      background: $ColorMain;
+      outline: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: rem(4);
+      color: $ColorPrimary;
+      width: rem(42);
+    }
+    .all-images {
+      margin-top: rem(12);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: rem(12);
+      .acc-images {
+        border-radius: rem(4);
+        overflow: hidden;
+        position: relative;
+        img {
+          aspect-ratio: 1/0.6;
+          width: 100%;
+          object-fit: cover;
+          height: 100%;
+        }
+        .delete {
+          position: absolute;
+          right: rem(0);
+          bottom: rem(0);
+          z-index: 100;
+          background: rgba(0, 0, 0, 0.519);
+          border-radius: 50%;
+          cursor: pointer;
+          border: none;
+          outline: transparent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: rem(32);
+          height: rem(32);
+          svg {
+            stroke: $ColorPrimary;
+          }
+        }
+      }
+      button.upload-img {
+        background: transparent;
+        outline: none;
+        display: block;
+        border: 1px solid $ColorGray;
+        aspect-ratio: 1/0.6;
+        height: 100%;
+        border-radius: rem(4);
+        cursor: pointer;
+        svg {
+          width: rem(60);
+          height: rem(60);
+          stroke: $ColorGray;
+        }
+        span {
+          font-size: $f-md;
+        }
+      }
+    }
+    .perks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: rem(12);
+      .per {
+        justify-self: start;
+        border: 1px solid $ColorGrayLight;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        padding: rem(10);
+        border-radius: rem(4);
+        box-shadow: 0 2px 4px #d9d8d8b8;
+      }
+      input[type='checkbox'] {
+        width: rem(16);
+        height: rem(16);
+      }
+
+      svg {
+        width: rem(18);
+        height: rem(18);
+        stroke-width: rem(1);
+      }
+      span {
+        display: block;
+      }
+    }
+  }
+  .form-submit-btn {
+    button {
+      width: 100%;
+      padding: rem(12);
+      background-color: $ColorMain;
+      border: none;
+      outline: transparent;
+      cursor: pointer;
+      border-radius: rem(4);
+      font-size: $f-md;
+      color: $ColorPrimary;
+    }
+  }
+}

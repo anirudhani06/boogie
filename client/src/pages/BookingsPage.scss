@@ -1,0 +1,50 @@
+@use '../scss/style.scss' as *;
+
+.BookingsPage {
+  margin: 0 auto;
+  margin-top: rem(16);
+  max-width: rem(700);
+  .places {
+    .place {
+      background-color: #dcdcdc97;
+      display: grid;
+      margin-bottom: rem(12);
+      grid-template-columns: 1fr 4fr;
+      border-radius: rem(16);
+      overflow: hidden;
+      gap: rem(16);
+      .img {
+        width: 100%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .content {
+        h2 {
+          font-size: $f-lr;
+          font-weight: 400;
+          margin: 0;
+          margin-bottom: rem(8);
+        }
+        p {
+          margin: 0;
+        }
+        .price {
+          span {
+            display: block;
+          }
+          p {
+            display: flex;
+            margin: rem(4) 0;
+            span {
+              font-weight: 500;
+              margin-right: rem(12);
+            }
+          }
+        }
+      }
+    }
+  }
+}

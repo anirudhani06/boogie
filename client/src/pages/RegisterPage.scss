@@ -1,0 +1,64 @@
+@use '../scss/style.scss' as *;
+
+.register-page {
+  h1 {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    font-size: $f-xl;
+    margin: rem(16) 0;
+    font-weight: 400;
+  }
+  .register-form {
+    margin: 0 auto;
+    width: rem(500);
+    .form-control {
+      position: relative;
+      margin-bottom: rem(16);
+      border: 1px solid $ColorGray;
+      border-radius: rem(6);
+      padding: 0 rem(12);
+      .error {
+        position: absolute;
+        top: rem(-15);
+        left: rem(12);
+        color: $ColorError;
+      }
+      input {
+        padding: rem(12) 0;
+        background: transparent;
+        outline: transparent;
+        border: none;
+      }
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        outline: transparent;
+        cursor: pointer;
+      }
+    }
+    .register-btn {
+      width: 100%;
+      padding: rem(14);
+      background-color: $ColorMain;
+      outline: transparent;
+      border: none;
+      font-size: $f-md;
+      color: $ColorPrimary;
+      border-radius: rem(22);
+      cursor: pointer;
+    }
+    .extras {
+      margin-top: rem(12);
+      p {
+        a {
+          color: $ColorBlue;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

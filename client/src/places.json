@@ -1,0 +1,251 @@
+{
+  "places": [
+    {
+      "place": [
+        {
+          "url": "place-1.webp"
+        },
+        {
+          "url": "place-1-1.webp"
+        },
+        {
+          "url": "place-1-2.webp"
+        },
+        {
+          "url": "place-1-3.webp"
+        },
+        {
+          "url": "place-1-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-2.webp"
+        },
+        {
+          "url": "place-2-1.webp"
+        },
+        {
+          "url": "place-2-2.webp"
+        },
+        {
+          "url": "place-2-3.webp"
+        },
+        {
+          "url": "place-2-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-3.webp"
+        },
+        {
+          "url": "place-3-1.webp"
+        },
+        {
+          "url": "place-3-2.webp"
+        },
+        {
+          "url": "place-3-3.webp"
+        },
+        {
+          "url": "place-3-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-4.webp"
+        },
+        {
+          "url": "place-4-1.webp"
+        },
+        {
+          "url": "place-4-2.webp"
+        },
+        {
+          "url": "place-4-3.webp"
+        },
+        {
+          "url": "place-4-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-5.webp"
+        },
+        {
+          "url": "place-5-1.webp"
+        },
+        {
+          "url": "place-5-2.webp"
+        },
+        {
+          "url": "place-5-3.webp"
+        },
+        {
+          "url": "place-5-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-6.webp"
+        },
+        {
+          "url": "place-6-1.webp"
+        },
+        {
+          "url": "place-6-2.webp"
+        },
+        {
+          "url": "place-6-3.webp"
+        },
+        {
+          "url": "place-6-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-7.webp"
+        },
+        {
+          "url": "place-7-1.webp"
+        },
+        {
+          "url": "place-7-2.webp"
+        },
+        {
+          "url": "place-7-3.webp"
+        },
+        {
+          "url": "place-7-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-8.webp"
+        },
+        {
+          "url": "place-8-1.webp"
+        },
+        {
+          "url": "place-8-2.webp"
+        },
+        {
+          "url": "place-8-3.webp"
+        },
+        {
+          "url": "place-8-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-9.webp"
+        },
+        {
+          "url": "place-9-1.webp"
+        },
+        {
+          "url": "place-9-2.webp"
+        },
+        {
+          "url": "place-9-3.webp"
+        },
+        {
+          "url": "place-9-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-10.webp"
+        },
+        {
+          "url": "place-10-1.webp"
+        },
+        {
+          "url": "place-10-2.webp"
+        },
+        {
+          "url": "place-10-3.webp"
+        },
+        {
+          "url": "place-9-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-11.webp"
+        },
+        {
+          "url": "place-11-1.webp"
+        },
+        {
+          "url": "place-11-2.webp"
+        },
+        {
+          "url": "place-11-3.webp"
+        },
+        {
+          "url": "place-11-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-12.webp"
+        },
+        {
+          "url": "place-12-1.webp"
+        },
+        {
+          "url": "place-12-2.webp"
+        },
+        {
+          "url": "place-12-3.webp"
+        },
+        {
+          "url": "place-12-4.webp"
+        }
+      ]
+    },
+    {
+      "place": [
+        {
+          "url": "place-13.webp"
+        },
+        {
+          "url": "place-13-1.webp"
+        },
+        {
+          "url": "place-13-2.webp"
+        },
+        {
+          "url": "place-13-3.webp"
+        },
+        {
+          "url": "place-13-4.webp"
+        }
+      ]
+    }
+  ]
+}

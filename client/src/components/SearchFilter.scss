@@ -1,0 +1,101 @@
+@use '../scss/style.scss' as *;
+.SearchFilter {
+  box-shadow: 0 2px 12px #00000030;
+  border-radius: rem(6);
+  position: sticky;
+  top: rem(32);
+  .title {
+    padding: rem(12);
+    padding-bottom: 0;
+    span {
+      margin: 0;
+      font-size: $f-lr;
+      font-weight: $fw-500;
+    }
+  }
+  .filters {
+    padding: rem(12);
+    .destination {
+      margin-bottom: rem(16);
+      label {
+        font-size: $f-md;
+        font-weight: $fw-400;
+        display: block;
+      }
+      input {
+        display: block;
+        padding: rem(12);
+        width: 100%;
+        outline: transparent;
+        border: 1px solid $ColorGrayLight;
+        border-radius: rem(4);
+      }
+    }
+    .date-range {
+      position: relative;
+      margin-bottom: rem(16);
+      label {
+        display: block;
+        font-size: $f-md;
+        font-weight: $fw-400;
+      }
+      .date {
+        border: 1px solid $ColorGrayLight;
+        padding: rem(12);
+        cursor: pointer;
+        border-radius: rem(4);
+        span {
+          color: $ColorGray;
+        }
+      }
+      .date-picker {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+        left: 0;
+        top: rem(72);
+      }
+    }
+    .price-range {
+      margin-bottom: rem(16);
+      label {
+        display: block;
+        font-size: $f-md;
+        font-weight: $fw-400;
+        width: 100%;
+      }
+      input {
+        padding: rem(12);
+        border: 1px solid $ColorGrayLight;
+        outline: transparent;
+        width: 100%;
+      }
+    }
+    .max-guests {
+      margin-bottom: rem(16);
+      label {
+        display: block;
+        font-size: $f-md;
+        font-weight: $fw-400;
+        width: 100%;
+      }
+      input {
+        padding: rem(12);
+        border: 1px solid $ColorGrayLight;
+        outline: transparent;
+        width: 100%;
+      }
+    }
+    button.submit-filter {
+      padding: rem(12);
+      width: 100%;
+      border: none;
+      outline: transparent;
+      background-color: $ColorMain;
+      cursor: pointer;
+      border-radius: rem(4);
+      color: $ColorPrimary;
+      font-size: $f-md;
+    }
+  }
+}

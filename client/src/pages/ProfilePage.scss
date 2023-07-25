@@ -1,0 +1,49 @@
+@use '../scss/style.scss' as *;
+
+.ProfilePage {
+  max-width: rem(950);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 3fr;
+  gap: rem(32);
+
+  .profile-details {
+    .change-pwd {
+      h3 {
+        font-size: $f-md;
+        cursor: pointer;
+        margin-bottom: rem(12);
+        color: $ColorBlue;
+      }
+      form {
+        input {
+          display: block;
+          width: 100%;
+          padding: rem(12);
+          border: 1px solid $ColorGrayLight;
+          outline: transparent;
+          border-radius: rem(6);
+          margin-bottom: rem(12);
+        }
+        .submit-btn {
+          background-color: $ColorMain;
+          padding: rem(12) rem(16);
+          border: none;
+          outline: transparent;
+          cursor: pointer;
+          color: $ColorPrimary;
+          border-radius: rem(4);
+        }
+      }
+    }
+    .delete-acc {
+      margin-top: rem(16);
+      h3 {
+        font-size: $f-md;
+        cursor: pointer;
+        margin-bottom: rem(12);
+        color: $ColorError;
+      }
+    }
+  }
+}

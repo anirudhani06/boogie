@@ -1,0 +1,47 @@
+@use '../scss/style.scss' as *;
+
+h3 {
+  margin: 0;
+  margin-bottom: rem(12);
+  font-weight: 500;
+}
+.form-control {
+  margin-bottom: rem(16);
+
+  label {
+    display: block;
+    font-weight: 400;
+    font-size: $f-md;
+    margin-bottom: rem(8);
+  }
+  .edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: transparent;
+    background: transparent;
+    cursor: pointer;
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: rem(12);
+    border: 1px solid $ColorGrayLight;
+    outline: transparent;
+    border-radius: rem(6);
+  }
+  button.save {
+    padding: rem(12) rem(22);
+    margin-top: rem(8);
+    margin-left: auto;
+    display: block;
+    cursor: pointer;
+    border: none;
+    outline: transparent;
+    background: $ColorMain;
+    color: $ColorPrimary;
+    font-size: $f-md;
+    border-radius: rem(6);
+  }
+}

@@ -1,0 +1,20 @@
+@use '../scss/style.scss' as *;
+.HostProfilePage {
+  display: grid;
+  grid-template-columns: 1.3fr 4fr;
+  gap: rem(16);
+
+  .hosted-places {
+    .title {
+      h3 {
+        font-size: $f-lr;
+        font-weight: 400;
+      }
+    }
+    .places {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: rem(16);
+    }
+  }
+}

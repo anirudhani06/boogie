@@ -1,0 +1,35 @@
+@use '../scss/style.scss' as *;
+.host-card {
+  background-color: $ColorPrimary;
+  box-shadow: 0 2px 10px #6a6a6a3f;
+  border-radius: rem(22);
+  position: sticky;
+  top: rem(32);
+  .img {
+    border-radius: 50%;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    margin-bottom: rem(8);
+    padding: rem(16);
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  ul.details {
+    border-top: 1px solid $ColorGrayLight;
+    padding: rem(16);
+    li {
+      &:not(:last-child) {
+        margin-bottom: rem(8);
+      }
+      &.about {
+        span {
+          font-weight: $fw-500;
+          font-size: $f-md;
+        }
+      }
+    }
+  }
+}

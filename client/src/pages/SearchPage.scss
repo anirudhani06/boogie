@@ -1,0 +1,15 @@
+@use '../scss/style.scss' as *;
+
+.SearchPage {
+  .filter {
+    display: grid;
+    grid-template-columns: 1.3fr 4fr;
+    gap: rem(16);
+
+    .places {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: rem(12);
+    }
+  }
+}

@@ -1,0 +1,282 @@
+@use '../scss/style.scss' as *;
+
+.container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: $ColorDark;
+  min-height: 100vh;
+  padding: rem(32) 0;
+  .show-all-photos {
+    width: 100%;
+    button.close {
+      position: fixed;
+      background-color: #f6f5f5b7;
+      display: inline-flex;
+      border-radius: rem(6);
+      padding: rem(6) rem(12);
+      margin-bottom: rem(8);
+      cursor: pointer;
+      border: none;
+      outline: transparent;
+      font-size: $f-md;
+      svg {
+        width: rem(22);
+        height: rem(22);
+      }
+    }
+    .images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: rem(12);
+      img {
+        width: 100%;
+        border-radius: rem(8);
+        object-fit: cover;
+        aspect-ratio: 2/1.2;
+      }
+    }
+  }
+}
+
+.PlacePage {
+  position: relative;
+
+  .wrapper {
+    .title {
+      h2 {
+        font-size: $f-xl;
+        margin: 0;
+        font-weight: $fw-600;
+        margin-bottom: rem(2);
+      }
+      button.favourite {
+        display: block;
+        background: #bbbbbb2e;
+        // box-shadow: 0 2px 6px #c6c6c632;
+        top: rem(8);
+        right: rem(8);
+        width: rem(32);
+        height: rem(32);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        outline: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        svg {
+          stroke: $ColorMain;
+          stroke-width: rem(2);
+          width: rem(32);
+          height: rem(32);
+        }
+      }
+    }
+    .location {
+      svg {
+        width: rem(18);
+        height: rem(18);
+      }
+      a {
+        text-decoration: underline;
+        color: $ColorBlue;
+        font-style: italic;
+      }
+    }
+    .host {
+      span {
+        font-size: $f-sm;
+        font-style: italic;
+        margin-right: rem(6);
+      }
+      a {
+        text-decoration: underline;
+        color: $ColorBlue;
+        font-style: italic;
+      }
+    }
+    .image-container {
+      position: relative;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: rem(8);
+      border-radius: rem(22);
+      overflow: hidden;
+      .subimg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: rem(8);
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 2/1.5;
+        object-fit: cover;
+      }
+    }
+    button.show-more-photos {
+      position: absolute;
+      right: rem(8);
+      bottom: rem(8);
+      padding: rem(6);
+      cursor: pointer;
+      border-radius: rem(4);
+      border: none;
+      outline: transparent;
+      background: $ColorPrimary;
+      svg {
+        width: rem(22);
+        height: rem(22);
+      }
+    }
+    .extras {
+      padding-top: rem(32);
+      display: grid;
+      grid-template-columns: 3fr 1.2fr;
+      gap: rem(22);
+
+      .details {
+        .description {
+          .title {
+            margin-bottom: rem(8);
+            h2 {
+              font-weight: $fw-500;
+              font-size: $f-lr;
+              margin: 0;
+            }
+          }
+          p {
+            line-height: 1.6;
+            font-size: $f-md;
+          }
+        }
+        .date {
+          p {
+            margin-bottom: rem(12);
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: rem(12);
+            font-size: $f-md;
+            font-weight: $fw-600;
+          }
+        }
+        .extra-perks {
+          .title {
+            margin: rem(8) 0;
+            h2 {
+              font-weight: $fw-500;
+              font-size: $f-lr;
+              margin: 0;
+            }
+          }
+          ul {
+            li {
+              margin-bottom: rem(16);
+              span {
+                font-size: $f-md;
+              }
+            }
+          }
+        }
+        .extra-desc {
+          background-color: $ColorPrimary;
+          box-shadow: 0 2px 6px #c6c6c6a8;
+          padding: rem(12);
+          border-radius: rem(6);
+          p {
+            margin: 0;
+            font-size: $f-md;
+          }
+        }
+      }
+      .booking {
+        .booking__card {
+          position: sticky;
+          top: rem(32);
+          box-shadow: 0 2px 6px #c6c6c6;
+          width: 100%;
+          background: $ColorPrimary;
+          padding: rem(32);
+
+          border-radius: rem(12);
+          form {
+            .total-price {
+              margin-bottom: rem(12);
+              span {
+                font-size: $f-lr;
+                font-weight: 500;
+              }
+            }
+            .form-control {
+              margin-bottom: rem(16);
+              .select-date {
+                position: relative;
+                border: 1px solid $ColorGrayMedium;
+                border-radius: rem(6) rem(6) 0 0;
+                cursor: pointer;
+                label {
+                  font-size: $f-sm;
+                  font-weight: $fw-500;
+                }
+                small {
+                  display: block;
+                  width: rem(1);
+                  background-color: $ColorGrayMedium;
+                }
+                .date-picker {
+                  position: absolute;
+                  top: rem(55);
+                  left: 0;
+                  box-shadow: 0 2px 6px #0000006e;
+                  border-radius: rem(6);
+                }
+              }
+              .guests {
+                padding: rem(6) rem(12);
+                border: 1px solid $ColorGrayMedium;
+                border-top: none;
+                border-radius: 0 0 rem(6) rem(6);
+                label {
+                  font-size: $f-sm;
+                }
+                select {
+                  width: 100%;
+                  border: none;
+                  outline: none;
+                  background: transparent;
+                  cursor: pointer;
+                }
+              }
+              label {
+                display: block;
+                margin-bottom: rem(8);
+                font-weight: 400;
+              }
+              input {
+                width: 100%;
+                padding: rem(12);
+                border: 1px solid $ColorGrayLight;
+                outline: transparent;
+                border-radius: rem(6);
+              }
+            }
+          }
+          .booking-btn {
+            width: 100%;
+            padding: rem(14);
+            cursor: pointer;
+            border: none;
+            outline: transparent;
+            background-color: $ColorMain;
+            color: $ColorPrimary;
+            font-size: $f-md;
+            border-radius: rem(12);
+          }
+        }
+      }
+    }
+  }
+}

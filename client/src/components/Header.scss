@@ -1,0 +1,84 @@
+@use '../scss/style.scss' as *;
+
+.header {
+  .logo {
+    span {
+      color: $ColorMain;
+      font-size: $f-xxl;
+      font-weight: $fw-600;
+    }
+  }
+  .search_filter {
+    box-shadow: 0 rem(2) 16px #6060600f;
+    padding: 0 rem(12);
+    border-radius: rem(12);
+    border: 1px solid $ColorGrayMedium;
+    input {
+      border: none;
+      border-right: 1px solid $ColorGrayMedium;
+      padding: rem(16) rem(8);
+      outline: transparent;
+      background: transparent;
+      color: $ColorDark;
+    }
+    .date {
+      position: relative;
+      padding: rem(12);
+      cursor: pointer;
+
+      svg {
+        stroke: $ColorDark;
+      }
+      span {
+        color: $ColorDark;
+        font-size: $f-sm;
+      }
+      .date-picker {
+        position: absolute;
+        z-index: 100;
+        top: rem(42);
+        left: -50%;
+      }
+    }
+    .search-btn {
+      background: $ColorMain;
+      border: none;
+      padding: rem(5);
+      border-radius: 50%;
+      cursor: pointer;
+      width: rem(32);
+      height: rem(32);
+      align-self: center;
+      svg {
+        width: rem(14);
+        height: rem(14);
+      }
+    }
+  }
+  .account {
+    border: 1px solid $ColorGrayMedium;
+    border-radius: rem(22);
+    padding: rem(4) rem(8);
+    .hamburger {
+      svg {
+        width: rem(22);
+        height: rem(26);
+        fill: $ColorDark;
+      }
+    }
+    .user-img {
+      background-color: $ColorGray;
+      border-radius: 50%;
+      width: rem(28);
+      height: rem(28);
+      svg {
+        width: rem(22);
+        height: rem(22);
+        fill: $ColorPrimary;
+      }
+    }
+    span {
+      color: $ColorDark;
+    }
+  }
+}
