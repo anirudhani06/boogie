@@ -24,8 +24,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         self.fields.pop("re_password", None)
         re_password = attrs.pop("re_password", None)
         password = attrs.get("password")
+
         user = USER(**attrs)
+
         if password == re_password:
+            if not attrs.get("username").islower():
+                raise serializers.ValidationError("username must be lowercase")
             try:
                 validate_password(password, user)
             except ValidationError as e:
