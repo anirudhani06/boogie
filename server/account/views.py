@@ -9,7 +9,12 @@ from rest_framework.permissions import (
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import (
+    RegisterSerializer,
+    LoginSerializer,
+    UserSerializer,
+    UserUpdateSerializer,
+)
 from django.contrib.auth import get_user_model, authenticate
 
 
@@ -19,6 +24,7 @@ USER = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [AllowAny]
+    serializer_class = UserSerializer
     queryset = USER.objects.all()
 
     def get_queryset(self):
@@ -33,6 +39,8 @@ class UserViewSet(viewsets.ModelViewSet):
             self.permission_classes = [AllowAny]
         elif self.action == "login":
             self.permission_classes = [AllowAny]
+        elif self.action == "me":
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
     def get_serializer_class(self):
@@ -40,7 +48,44 @@ class UserViewSet(viewsets.ModelViewSet):
             return RegisterSerializer
         elif self.action == "login":
             return LoginSerializer
+        elif self.action == "me" and self.request.method == "GET":
+            return UserSerializer
+        elif self.action == "me" and (
+            self.request.method == "PATCH" or self.request.method == "PUT"
+        ):
+            return UserUpdateSerializer
         return self.serializer_class
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_instance()
+        data = request.data
+        serializer = self.get_serializer(
+            instance=instance, data=data, many=False, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_instance()
+        data = request.data
+        serializer = self.get_serializer(
+            instance=instance, data=data, many=False, partial=False
+        )
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_instance()
+        self.perform_destroy(instance)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=False, methods=["POST"])
     def register(self, request, *args, **kwargs):
@@ -75,3 +120,17 @@ class UserViewSet(viewsets.ModelViewSet):
             {"refresh": str(refresh), "access": str(refresh.access_token)},
             status=status.HTTP_200_OK,
         )
+
+    @action(detail=False, methods=["GET", "PUT", "PATCH", "DELETE"])
+    def me(self, request, *args, **kwargs):
+        if request.method == "GET":
+            instance = self.get_instance()
+            serializer = self.get_serializer(instance)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif request.method == "PATCH":
+            return self.partial_update(request, *args, **kwargs)
+        elif request.method == "PUT":
+            return self.update(request, *args, *kwargs)
+        elif request.method == "DELETE":
+            return self.destroy(request, *args, **kwargs)
