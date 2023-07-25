@@ -58,3 +58,35 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         return super().validate(attrs)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USER
+        fields = (
+            "id",
+            "name",
+            "username",
+            "avatar",
+            "email",
+            "phone",
+            "bio",
+            "date_joined",
+        )
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    # avatar = serializers.ImageField()
+    # phone = serializers.CharField()
+    # bio = serializers.CharField()
+
+    class Meta:
+        model = USER
+        fields = (
+            "name",
+            "username",
+            "avatar",
+            "email",
+            "phone",
+            "bio",
+        )
