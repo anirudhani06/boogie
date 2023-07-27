@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     # installed apps
     "account.apps.AccountConfig",
+    "place.apps.PlaceConfig",
 ]
 
 MIDDLEWARE = [
