@@ -17,8 +17,8 @@ class Place(models.Model):
     extra = models.TextField()
     max_guest = models.IntegerField(default=1)
     price = models.IntegerField(default=0)
-    startDate = models.DateField(auto_now_add=True)
-    endDate = models.DateField(auto_now_add=True)
+    startDate = models.DateField()
+    endDate = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
