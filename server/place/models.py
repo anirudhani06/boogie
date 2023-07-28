@@ -41,3 +41,26 @@ class PlaceImages(models.Model):
     class Meta:
         verbose_name = "image"
         verbose_name_plural = "images"
+
+
+class Perks(models.Model):
+    place = models.OneToOneField(Place, on_delete=models.CASCADE, related_name="perks")
+    wifi = models.BooleanField(default=False)
+    parking = models.BooleanField(default=False)
+    pets_allowed = models.BooleanField(default=False)
+    heating = models.BooleanField(default=False)
+    air_conditioner = models.BooleanField(default=False)
+    private_entrence = models.BooleanField(default=False)
+    tv = models.BooleanField(default=False)
+    washing_machine = models.BooleanField(default=False)
+    pool = models.BooleanField(default=False)
+    kitchen = models.BooleanField(default=False)
+    security_camera = models.BooleanField(default=False)
+    workspace = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.place.title
+
+    class Meta:
+        verbose_name = "perks"
+        verbose_name_plural = "perks"
