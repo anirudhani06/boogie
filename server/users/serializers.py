@@ -63,3 +63,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         with atomic():
             user = USER.objects.create_user(**validated_data)
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=20)
+    password = serializers.CharField(style={"input_type": "password"}, max_length=20)
