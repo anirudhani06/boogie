@@ -20,7 +20,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = "id"
 
     def get_serializer_class(self):
-        if self.action == "list":
+        if self.action == "list" or self.action == "retrieve":
             return UserSerializer
         elif self.action == "register":
             return RegisterSerializer
@@ -32,6 +32,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "list":
             self.permission_classes = [IsAuthenticatedOrReadOnly]
+        if self.action == "retrieve":
+            self.permission_classes = [IsAuthenticated]
         elif self.action == "register":
             self.permission_classes = [AllowAny]
         elif self.action == "login":
@@ -40,6 +42,12 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["POST"])
