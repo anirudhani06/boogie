@@ -127,6 +127,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
+    "NON_FIELD_ERRORS_KEY": "error",
 }
 
 SIMPLE_JWT = {
