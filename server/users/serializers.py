@@ -68,3 +68,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=20)
     password = serializers.CharField(style={"input_type": "password"}, max_length=20)
+
+
+class CurrentPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(style={"input_type": "password"})
+
+    def validate_password(self, value):
+        is_valid_password = self.context["request"].user.check_password(value)
+        if is_valid_password:
+            return value
+
+        raise serializers.ValidationError("Invalid password")
