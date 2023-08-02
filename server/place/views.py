@@ -12,6 +12,7 @@ from .serializers import PlaceSerializer
 from .permissions import IsOwnerOrReadOnly
 from .models import Place, PlaceImages, Perks
 from .filters import PlaceFilter
+from .paginations import Pagination
 
 
 class PlaceModelViewSet(viewsets.ModelViewSet):
@@ -22,6 +23,7 @@ class PlaceModelViewSet(viewsets.ModelViewSet):
     ordering_field = ("created_at",)
     filterset_class = PlaceFilter
     lookup_url_kwarg = "id"
+    pagination_class = Pagination
 
     def get_instance(self):
         return self.request.user
