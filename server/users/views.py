@@ -51,14 +51,10 @@ class UserModelViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
-        serializer = self.get_serializer(self.queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return super().retrieve(request, *args, **kwargs)
 
     @action(detail=False, methods=["POST"])
     def register(self, request, *args, **kwargs):
