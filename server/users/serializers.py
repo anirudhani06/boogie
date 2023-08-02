@@ -70,12 +70,46 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(style={"input_type": "password"}, max_length=20)
 
 
-class CurrentPasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(style={"input_type": "password"})
+class PasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(style={"input_type": "password"})
 
-    def validate_password(self, value):
+    def validate(self, attrs):
+        user = getattr(self, "user", None) or self.context["request"].user
+        assert user is not None
+        try:
+            validate_password(attrs["new_password"], user)
+        except ValidationError as e:
+            error = serializers.as_serializer_error(e)
+            raise serializers.ValidationError(error)
+
+        return super().validate(attrs)
+
+
+class CurrentPasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(style={"input_type": "password"})
+
+    def validate_current_password(self, value):
         is_valid_password = self.context["request"].user.check_password(value)
         if is_valid_password:
             return value
 
         raise serializers.ValidationError("Invalid password")
+
+
+class PasswordRetypeSerializer(PasswordSerializer):
+    re_password = serializers.CharField(
+        style={"input_type": "password"}, write_only=True
+    )
+
+    def validate(self, attrs):
+        new_password = attrs["new_password"]
+        re_password = attrs["re_password"]
+
+        if new_password == re_password:
+            return super().validate(attrs)
+
+        raise serializers.ValidationError(_("Password not macthing"))
+
+
+class ChangePasswordSerializer(CurrentPasswordSerializer, PasswordRetypeSerializer):
+    pass
