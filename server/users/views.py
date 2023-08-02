@@ -12,6 +12,7 @@ from .serializers import (
     RegisterSerializer,
     LoginSerializer,
     CurrentPasswordSerializer,
+    ChangePasswordSerializer,
 )
 from django.contrib.auth import get_user_model, authenticate
 
@@ -34,6 +35,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
             return LoginSerializer
         elif self.action == "me" and self.request and self.request.method == "DELETE":
             return CurrentPasswordSerializer
+        elif self.action == "change_password":
+            return ChangePasswordSerializer
 
         return UserSerializer
 
@@ -47,6 +50,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
         elif self.action == "login":
             self.permission_classes = [AllowAny]
         elif self.action == "me":
+            self.permission_classes = [IsAuthenticated]
+        elif self.action == "change_password":
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
@@ -105,3 +110,15 @@ class UserModelViewSet(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             self.perform_destroy(instance)
             return Response({}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=["POST"])
+    def change_password(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.get_instance()
+        user.set_password(serializer.data.get("new_password"))
+        user.save()
+
+        return Response(
+            {"message": "password changes successfuly"}, status=status.HTTP_200_OK
+        )
