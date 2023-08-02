@@ -6,15 +6,21 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import PlaceSerializer
 from .permissions import IsOwnerOrReadOnly
 from .models import Place, PlaceImages, Perks
+from .filters import PlaceFilter
 
 
 class PlaceModelViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    ordering_field = ("created_at",)
+    filterset_class = PlaceFilter
     lookup_url_kwarg = "id"
 
     def get_instance(self):
