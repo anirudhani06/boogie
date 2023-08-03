@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "django_filters",
     "debug_toolbar",
     # installed apps
@@ -141,10 +142,11 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # minutes=30
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # days=1
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),  # minutes=5
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=5),  # minutes=5
     "ROTATE_REFRESH_TOKENS": True,
-    "UPDATE_LAST_LOGIN": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
 }
 
 INTERNAL_IPS = [
