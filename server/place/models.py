@@ -69,3 +69,20 @@ class Perks(models.Model):
         ordering = ["-created_at"]
         verbose_name = "perks"
         verbose_name_plural = "perks"
+
+
+class Favourites(models.Model):
+    id = models.UUIDField(
+        default=uuid.uuid4, primary_key=True, unique=True, editable=False
+    )
+    user = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="favourites")
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.place.title
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "favourites"
+        verbose_name_plural = "favourites"
