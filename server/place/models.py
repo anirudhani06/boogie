@@ -76,7 +76,9 @@ class Favourites(models.Model):
         default=uuid.uuid4, primary_key=True, unique=True, editable=False
     )
     user = models.ForeignKey(USER, on_delete=models.CASCADE, related_name="favourites")
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    place = models.ForeignKey(
+        Place, on_delete=models.CASCADE, related_name="favourites"
+    )
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
