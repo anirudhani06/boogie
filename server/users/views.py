@@ -61,6 +61,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticated]
         elif self.action == "places":
             self.permission_classes = [IsAuthenticated]
+        elif self.action == "favourites":
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
@@ -135,4 +137,10 @@ class UserModelViewSet(viewsets.ModelViewSet):
     def places(self, request, *args, **kwargs):
         my_places = self.get_instance().places.all()
         serializer = self.get_serializer(my_places, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["GET"])
+    def favourites(self, request, *args, **kwargs):
+        my_favourites = Place.objects.filter(favourites__user=self.get_instance())
+        serializer = self.get_serializer(my_favourites, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
