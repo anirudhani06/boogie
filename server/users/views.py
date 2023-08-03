@@ -14,6 +14,8 @@ from .serializers import (
     CurrentPasswordSerializer,
     ChangePasswordSerializer,
 )
+from place.serializers import PlaceSerializer
+from place.models import Place
 from django.contrib.auth import get_user_model, authenticate
 
 USER = get_user_model()
@@ -37,6 +39,10 @@ class UserModelViewSet(viewsets.ModelViewSet):
             return CurrentPasswordSerializer
         elif self.action == "change_password":
             return ChangePasswordSerializer
+        elif self.action == "places":
+            return PlaceSerializer
+        elif self.action == "favourites":
+            return PlaceSerializer
 
         return UserSerializer
 
@@ -52,6 +58,8 @@ class UserModelViewSet(viewsets.ModelViewSet):
         elif self.action == "me":
             self.permission_classes = [IsAuthenticated]
         elif self.action == "change_password":
+            self.permission_classes = [IsAuthenticated]
+        elif self.action == "places":
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
@@ -122,3 +130,9 @@ class UserModelViewSet(viewsets.ModelViewSet):
         return Response(
             {"message": "password changes successfuly"}, status=status.HTTP_200_OK
         )
+
+    @action(detail=False, methods=["GET"])
+    def places(self, request, *args, **kwargs):
+        my_places = self.get_instance().places.all()
+        serializer = self.get_serializer(my_places, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
