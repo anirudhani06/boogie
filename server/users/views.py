@@ -99,6 +99,21 @@ class UserModelViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,
         )
 
+    @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
+    def refresh_token(self, request, *args, **kwargs):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+
+            return Response(
+                {"access": str(token.access_token)}, status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            return Response(
+                {"error": "Invalid token or error occured"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
     @action(detail=False, methods=["GET", "PUT", "PATCH", "DELETE"])
     def me(self, request, *args, **kwargs):
         instance = self.get_instance()
