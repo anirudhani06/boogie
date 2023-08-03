@@ -10,7 +10,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import PlaceSerializer
 from .permissions import IsOwnerOrReadOnly
-from .models import Place, PlaceImages, Perks
+from .models import Place, PlaceImages, Perks, Favourites
 from .filters import PlaceFilter
 from .paginations import Pagination
 
@@ -42,6 +42,8 @@ class PlaceModelViewSet(viewsets.ModelViewSet):
             or self.action == "update"
         ):
             self.permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+        elif self.action == "fav_add":
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
@@ -66,3 +68,41 @@ class PlaceModelViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
+
+    @action(detail=True, methods=["POST"], permission_classes=[IsAuthenticated])
+    def fav_add(self, request, *args, **kwargs):
+        fav = Favourites.objects.filter(
+            user=self.get_instance(), place=self.get_object()
+        ).first()
+
+        if fav is None:
+            Favourites.objects.create(user=self.get_instance(), place=self.get_object())
+
+            return Response(
+                {"message": "place added into your favourite"},
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {"message": "place already in your favourite"},
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["POST"], permission_classes=[IsAuthenticated])
+    def fav_rem(self, request, *args, **kwargs):
+        fav = Favourites.objects.filter(
+            user=self.get_instance(), place=self.get_object()
+        ).first()
+
+        if fav is not None:
+            fav.delete()
+
+            return Response(
+                {"message": "place removed from  your favourite"},
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {"message": "place already not in your favourite"},
+            status=status.HTTP_200_OK,
+        )
