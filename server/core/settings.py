@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
@@ -142,8 +142,8 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),  # minutes=5
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=5),  # minutes=5
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # minutes=5
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=10),  # minutes=10
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
