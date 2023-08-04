@@ -42,8 +42,7 @@ class PlaceModelViewSet(viewsets.ModelViewSet):
             or self.action == "update"
         ):
             self.permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
-        elif self.action == "fav_add":
-            self.permission_classes = [IsAuthenticated]
+
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
@@ -70,39 +69,19 @@ class PlaceModelViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
     @action(detail=True, methods=["POST"], permission_classes=[IsAuthenticated])
-    def fav_add(self, request, *args, **kwargs):
-        fav = Favourites.objects.filter(
+    def favourite(self, request, *args, **kwargs):
+        queryset = Favourites.objects.filter(
             user=self.get_instance(), place=self.get_object()
         ).first()
 
-        if fav is None:
+        if queryset is None:
             Favourites.objects.create(user=self.get_instance(), place=self.get_object())
-
             return Response(
                 {"message": "place added into your favourite"},
                 status=status.HTTP_200_OK,
             )
-
+        queryset.delete()
         return Response(
-            {"message": "place already in your favourite"},
-            status=status.HTTP_200_OK,
-        )
-
-    @action(detail=True, methods=["POST"], permission_classes=[IsAuthenticated])
-    def fav_rem(self, request, *args, **kwargs):
-        fav = Favourites.objects.filter(
-            user=self.get_instance(), place=self.get_object()
-        ).first()
-
-        if fav is not None:
-            fav.delete()
-
-            return Response(
-                {"message": "place removed from  your favourite"},
-                status=status.HTTP_200_OK,
-            )
-
-        return Response(
-            {"message": "place already not in your favourite"},
+            {"message": "place removed from your favourite"},
             status=status.HTTP_200_OK,
         )
