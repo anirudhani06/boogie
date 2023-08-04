@@ -51,18 +51,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsAuthenticatedOrReadOnly]
         if self.action == "retrieve":
             self.permission_classes = [IsAuthenticated]
-        elif self.action == "register":
-            self.permission_classes = [AllowAny]
-        elif self.action == "login":
-            self.permission_classes = [AllowAny]
-        elif self.action == "me":
-            self.permission_classes = [IsAuthenticated]
-        elif self.action == "change_password":
-            self.permission_classes = [IsAuthenticated]
-        elif self.action == "places":
-            self.permission_classes = [IsAuthenticated]
-        elif self.action == "favourites":
-            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
@@ -77,7 +65,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
         return Response(data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=["POST"])
+    @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
     def register(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -85,7 +73,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(detail=False, methods=["POST"])
+    @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
     def login(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -133,7 +121,11 @@ class UserModelViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-    @action(detail=False, methods=["GET", "PUT", "PATCH", "DELETE"])
+    @action(
+        detail=False,
+        methods=["GET", "PUT", "PATCH", "DELETE"],
+        permission_classes=[IsAuthenticated],
+    )
     def me(self, request, *args, **kwargs):
         instance = self.get_instance()
         if request.method == "GET":
@@ -155,7 +147,7 @@ class UserModelViewSet(viewsets.ModelViewSet):
             self.perform_destroy(instance)
             return Response({}, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["POST"])
+    @action(detail=False, methods=["POST"], permission_classes=[IsAuthenticated])
     def change_password(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -167,13 +159,13 @@ class UserModelViewSet(viewsets.ModelViewSet):
             {"message": "password changes successfuly"}, status=status.HTTP_200_OK
         )
 
-    @action(detail=False, methods=["GET"])
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def places(self, request, *args, **kwargs):
         my_places = self.get_instance().places.all()
         serializer = self.get_serializer(my_places, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=["GET"])
+    @action(detail=False, methods=["GET"], permission_classes=[IsAuthenticated])
     def favourites(self, request, *args, **kwargs):
         my_favourites = Place.objects.filter(favourites__user=self.get_instance())
         serializer = self.get_serializer(my_favourites, many=True)
