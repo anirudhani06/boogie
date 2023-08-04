@@ -69,7 +69,13 @@ class UserModelViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
+        serializer = self.get_serializer(instance=self.get_object())
+        data = serializer.data
+        data["places"] = PlaceSerializer(
+            Place.objects.filter(host=self.get_object()), many=True
+        ).data
+
+        return Response(data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["POST"])
     def register(self, request, *args, **kwargs):
