@@ -5,7 +5,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
 import { places } from '../places.json';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const PlacePage = () => {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
@@ -95,11 +95,11 @@ const PlacePage = () => {
               />
             </svg>
 
-            <a href="">Kerala,India</a>
+            <Link to={'/home'}>Kerala,India</Link>
           </div>
           <div className="host flex flex-ai-c flex-jc-s">
             <span>HOST: </span>
-            <a href="/host/sd">anirudh</a>
+            <Link to={'/host/sd'}>anirudh</Link>
           </div>
         </div>
         <div className="image-container">
