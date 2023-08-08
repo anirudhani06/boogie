@@ -136,7 +136,7 @@ AUTH_USER_MODEL = "users.User"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "rest_framework.authentication.SessionAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "users.authentication.CustomJWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
@@ -149,8 +149,8 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # minutes=5
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=10),  # minutes=10
+    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=30),  # seconds=5
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=5),  # minutes=5
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
@@ -160,8 +160,15 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-CORS_ALLOWED_ORIGINS = (
-    "http://localhost:8080",
-    "http://127.0.0.1:9000",
-    "http://127.0.0.1:5173",
-)
+CORS_ALLOWED_ORIGINS = getenv(
+    "CORS_ALLOWED_ORIGINS", "http://127.0.0.1:9000,http://127.0.0.1:5173"
+).split(",")
+
+CORS_ALLOW_CREDENTIALS = True
+AUTH_COOKIE = "access"
+AUTH_COOKIE_ACCESS_MAX_AGE = timedelta(seconds=30)
+AUTH_COOKIE_REFRESH_MAX_AGE = timedelta(minutes=5)
+AUTH_COOKIE_SECURE = getenv("AUTH_COOKIE_SECURE", "True") == "True"
+AUTH_COOKIE_HTTP_ONLY = True
+AUTH_COOKIE_PATH = "/"
+AUTH_COOKIE_SAMESITE = "None"
