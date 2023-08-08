@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import viewsets, generics, status
 from rest_framework.permissions import (
     AllowAny,
@@ -22,7 +23,7 @@ USER = get_user_model()
 
 
 class UserModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     queryset = USER.objects.all()
     lookup_url_kwarg = "id"
@@ -47,10 +48,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
         return UserSerializer
 
     def get_permissions(self):
-        if self.action == "list":
-            self.permission_classes = [IsAuthenticatedOrReadOnly]
-        if self.action == "retrieve":
-            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
 
     def list(self, request, *args, **kwargs):
@@ -88,38 +85,74 @@ class UserModelViewSet(viewsets.ModelViewSet):
             )
 
         refresh_token = RefreshToken.for_user(user)
-        return Response(
+        response = Response(
             {"refresh": str(refresh_token), "access": str(refresh_token.access_token)},
             status=status.HTTP_200_OK,
         )
+        if response.status_code == 200:
+            access_token = response.data.get("access")
+            refresh_token = response.data.get("refresh")
+
+            response.set_cookie(
+                "access",
+                access_token,
+                max_age=settings.AUTH_COOKIE_ACCESS_MAX_AGE,
+                path=settings.AUTH_COOKIE_PATH,
+                secure=settings.AUTH_COOKIE_SECURE,
+                httponly=settings.AUTH_COOKIE_HTTP_ONLY,
+                samesite=settings.AUTH_COOKIE_SAMESITE,
+            )
+
+            response.set_cookie(
+                "refresh",
+                refresh_token,
+                max_age=settings.AUTH_COOKIE_REFRESH_MAX_AGE,
+                path=settings.AUTH_COOKIE_PATH,
+                secure=settings.AUTH_COOKIE_SECURE,
+                httponly=settings.AUTH_COOKIE_HTTP_ONLY,
+                samesite=settings.AUTH_COOKIE_SAMESITE,
+            )
+
+        return response
 
     @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
     def refresh_token(self, request, *args, **kwargs):
-        try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
+        refresh_token = request.COOKIES.get("refresh")
+        if refresh_token:
+            try:
+                token = RefreshToken(refresh_token)
+                response = Response(
+                    {"access": str(token.access_token)}, status=status.HTTP_200_OK
+                )
+                if response.status_code == 200:
+                    access_token = response.data.get("access")
+                    response.set_cookie(
+                        "access",
+                        access_token,
+                        max_age=settings.AUTH_COOKIE_ACCESS_MAX_AGE,
+                        path=settings.AUTH_COOKIE_PATH,
+                        secure=settings.AUTH_COOKIE_SECURE,
+                        httponly=settings.AUTH_COOKIE_HTTP_ONLY,
+                        samesite=settings.AUTH_COOKIE_SAMESITE,
+                    )
 
-            return Response(
-                {"access": str(token.access_token)}, status=status.HTTP_200_OK
-            )
-        except Exception as e:
-            return Response(
-                {"error": "Invalid token or error occured"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+                return response
+            except Exception as e:
+                return Response(
+                    {"error": "Invalid token or error occured"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        return Response(
+            {"error": "Invalid token or error occured"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
     @action(detail=False, methods=["POST"], permission_classes=[IsAuthenticated])
     def logout(self, request, *args, **kwargs):
-        try:
-            refresh_token = request.data["refresh_token"]
-            RefreshToken(refresh_token).blacklist()
-
-            return Response({"message": "logout successful"}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response(
-                {"error": "Invalid token or error occured"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.delete_cookie("access")
+        response.delete_cookie("refresh")
+        return response
 
     @action(
         detail=False,
